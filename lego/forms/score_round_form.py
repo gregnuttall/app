@@ -108,45 +108,45 @@ class ScoreRoundForm(FlaskForm):
                              value=18)
     m03_planet_area = BonusField('Brick completely in Northeast Planet Area ', value=4)
 
-    # m04_complete = SelectField('The Robot or whatever agent-craft it sends out needs to cross '
-    #                           'the Craters Model, by driving directly over it.',
-    #                           choices=[('0', 'Robot or Agent crossed completely east to west between the towers'),
-    #                                    ('20', 'Gate completely flattened')], # TODO both must be selected to score points
-    #                           validators=[Optional()])
+    m04_complete = SelectField('The Robot or whatever agent-craft it sends out needs to cross '
+                              'the Craters Model, by driving directly over it.',
+                              choices=[('0', 'Robot or Agent crossed completely east to west between the towers'),
+                                       ('20', 'Gate completely flattened')], # TODO both must be selected to score points
+                              validators=[Optional()])
 
-    m04_label = 'The Robot or whatever agent-craft it sends out needs to cross the Craters Model, by driving directly over it.'
-    m04_crossed = BonusField('Robot or Agent crossed completely east to west between the towers')
-    m04_gate = BonusField('Gate completely flattened', value='20')
+    # m04_label = 'The Robot or whatever agent-craft it sends out needs to cross the Craters Model, by driving directly over it.'
+    # m04_crossed = BonusField('Robot or Agent crossed completely east to west between the towers')
+    # m04_gate = BonusField('Gate completely flattened', value='20')
 
-    # m05_complete = SelectField('The Robot must get all the Core Samples out of the Core Site.',
-    #                           choices=[('16', 'All samples moved no longer touching Core Site Model Axis'),
-    #                             # TODO add logic so only one of the below choices are available
-    #                                    ('12', 'Gas Core Sample touching the mat and completely in the Lander’s Target Circle'), # Option 1
-    #                                    ('10', 'Gas Core Sample completely in Base'), # Option 2
-    #                                    ('12', 'Water Core Sample supported only by the Food Growth Chamber')
-    #                                    ],
-    #                           validators=[Optional()])
+    m05_complete = SelectField('The Robot must get all the Core Samples out of the Core Site.',
+                              choices=[('16', 'All samples moved no longer touching Core Site Model Axis'),
+                                # TODO add logic so only one of the below choices are available
+                                       ('12', 'Gas Core Sample touching the mat and completely in the Lander’s Target Circle'), # Option 1
+                                       ('10', 'Gas Core Sample completely in Base'), # Option 2
+                                       ('12', 'Water Core Sample supported only by the Food Growth Chamber')
+                                       ],
+                              validators=[Optional()])
 
-    m05_label = 'The Robot must get all the Core Samples out of the Core Site.'
-    m05_all_samples = BonusField('All samples moved no longer touching Core Site Model Axis', value=16)
-    m05_gas_core_touching = BonusField('Gas Core Sample touching the mat and completely in the Lander’s Target Circle',
-                                       value=12)
-    m05_gas_core_completely = BonusField('Gas Core Sample completely in Base', value=12)
-    m05_water_core = BonusField('Water Core Sample supported only by the Food Growth Chamber', value=12)
+    # m05_label = 'The Robot must get all the Core Samples out of the Core Site.'
+    # m05_all_samples = BonusField('All samples moved no longer touching Core Site Model Axis', value=16)
+    # m05_gas_core_touching = BonusField('Gas Core Sample touching the mat and completely in the Lander’s Target Circle',
+    #                                    value=12)
+    # m05_gas_core_completely = BonusField('Gas Core Sample completely in Base', value=12)
+    # m05_water_core = BonusField('Water Core Sample supported only by the Food Growth Chamber', value=12)
 
-    # m06_complete = SelectField('The Robot needs to remove and insert Modules among the '
-    #                           'Habitation Hub port holes.',
-    #                           choices=[('16', 'Cone Module completely in base'),
-    #                                    ('16', 'Tube Module in Habitation Hub Port West Side, touching nothing but the Habitation Hub'),
-    #                                    ('14', 'Docking Module in Habitation Hub Port East Side, touching nothing but the Habitation Hub')],
-    #                           validators=[Optional()])
+    m06_complete = SelectField('The Robot needs to remove and insert Modules among the '
+                              'Habitation Hub port holes.',
+                              choices=[('16', 'Cone Module completely in base'),
+                                       ('16', 'Tube Module in Habitation Hub Port West Side, touching nothing but the Habitation Hub'),
+                                       ('14', 'Docking Module in Habitation Hub Port East Side, touching nothing but the Habitation Hub')],
+                              validators=[Optional()])
 
-    m06_label = 'The Robot needs to remove and insert Modules among the Habitation Hub port holes.'
-    m06_completely = BonusField('Cone Module completely in base', value=16)
-    m06_tube = BonusField('Tube Module in Habitation Hub Port West Side, touching nothing but the Habitation Hub',
-                          value=16)
-    m06_docking = BonusField('Docking Module in Habitation Hub Port East Side, touching nothing but the Habitation Hub',
-                             value=14)
+    # m06_label = 'The Robot needs to remove and insert Modules among the Habitation Hub port holes.'
+    # m06_completely = BonusField('Cone Module completely in base', value=16)
+    # m06_tube = BonusField('Tube Module in Habitation Hub Port West Side, touching nothing but the Habitation Hub',
+    #                       value=16)
+    # m06_docking = BonusField('Docking Module in Habitation Hub Port East Side, touching nothing but the Habitation Hub',
+    #                          value=14)
 
     m07_complete = RadioField('The Robot needs to get Gerhard’s body into the Airlock Chamber.',
                               choices=[('0', 'Gerhard’s body not in airlock chamber'),
@@ -249,13 +249,9 @@ class ScoreRoundForm(FlaskForm):
             'm02_score': int(self.m02_complete.data),
             'm03_score': (self.m03_ejected.data * self.m03_ejected.value) + (
                     self.m03_planet_area.data * self.m03_planet_area.value),
-            'm04_score': self.m04_crossed.data * self.m04_gate.data * self.m04_gate.value,
-            'm05_score': (self.m05_all_samples.data * self.m05_all_samples.value) + (
-                    self.m05_water_core.data * self.m05_water_core.value) + (
-                                 self.m05_gas_core_completely.data * self.m05_gas_core_completely.value) + (
-                                 self.m05_gas_core_touching.data * self.m05_gas_core_touching.value),
-            'm06_score': (self.m06_completely.data * self.m06_completely.value) + (
-                    self.m06_tube.data * self.m06_tube.value) + (self.m06_docking.data * self.m06_docking.value),
+            'm04_score': int(self.m04_complete.data),
+            'm05_score': int(self.m05_complete.data),
+            'm06_score': int(self.m06_complete.data),
             'm07_score': int(self.m07_complete.data),
             'm08_score': int(self.m08_complete.data),
             'm09_score': int(self.m09_complete.data),
