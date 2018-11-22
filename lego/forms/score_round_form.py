@@ -95,6 +95,7 @@ class ScoreRoundForm(FlaskForm):
                               'depending on strategy and conditions.',
                               choices=[('18', 'Your Solar Panel is Angled toward the other team’s field'),
                                        ('22', 'Both Solar Panels are angled towards the same field')],
+                              default='0',
                               validators=[Optional()])
 
     # m03_complete = SelectField('The Regolith Core must be placed into the 3D Printer, '
