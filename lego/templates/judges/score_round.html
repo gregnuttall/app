@@ -47,17 +47,24 @@
 
             <div class="form-input">
                 <div>
-                    {{ form.m01_complete }}
+                    {{ form.m01_label }}
                 </div>
-                <!-- {% for x in form.m01_complete %}
-                    
-                {% endfor %} -->
-                    <!--    
-                {% if form.m01_complete.errors %}
-                    {{ form.m01_complete(class_='input-radio input-error') }}
-                {% else %}
-                    {{ form.m01_complete(class_='input-radio') }}
-                {% endif %} -->
+                <div>
+                    {{ form.m01_independent }}
+                    {{ form.m01_independent.label }}
+                </div>
+                <div>
+                    {{ form.m01_crew }}
+                    {{ form.m01_crew.label }}
+                </div>
+                <div>
+                    {{ form.m01_supply}}
+                    {{ form.m01_supply.label}}
+                </div>
+                <div>
+                    {{ form.m01_vehicle}}
+                    {{ form.m01_vehicle.label}}
+                </div>
             </div>
         </section>
 
@@ -79,13 +86,17 @@
             <h2>{{ form.m03_title }}</h2>
 
             <div class="form-input">
-                {{ form.m03_complete.label }}
-
-                {% if form.m03_complete.errors %}
-                    {{ form.m03_complete(class_='input-radio input-error') }}
-                {% else %}
-                    {{ form.m03_complete(class_='input-radio') }}
-                {% endif %}
+                <div>
+                    {{ form.m03_label }}
+                </div>
+                <div>
+                    {{ form.m03_ejected }}
+                    {{ form.m03_ejected.label }}
+                </div>
+                <div>
+                    {{ form.m03_planet_area }}
+                    {{ form.m03_planet_area.label }}
+                </div>
             </div>
         </section>
 
@@ -159,8 +170,6 @@
             </div>
 
             <div class="form-input">
-                {{ form.m08_bonus(class_='input-checkbox') }}
-                {{ form.m08_bonus.label(class_='inline') }}
             </div>
         </section>
 
@@ -234,8 +243,6 @@
             </div>
 
             <div class="form-input">
-                {{ form.m13_bonus(class_='input-checkbox') }}
-                {{ form.m13_bonus.label(class_='inline') }}
             </div>
         </section>
 
@@ -267,67 +274,6 @@
             </div>
         </section>
 
-        <section>
-            <h2>{{ form.m16_title }}</h2>
-
-            <div class="form-input">
-                {{ form.m16_part_1.label }}
-
-                {% if form.m16_part_1.errors %}
-                    {{ form.m16_part_1(class_='input-radio input-error') }}
-                {% else %}
-                    {{ form.m16_part_1(class_='input-radio', onclick='toggle_bonus(this.id)') }}
-                {% endif %}
-            </div>
-
-            <div class="form-input">
-                {{ form.m16_part_2.label }}
-
-                {% if form.m16_part_2.errors %}
-                    {{ form.m16_part_2(class_='input-select input-error') }}
-                {% else %}
-                    {{ form.m16_part_2(class_='input-select') }}
-                {% endif %}
-            </div>
-
-            <div class="form-input">
-                {{ form.m16_bonus(class_='input-checkbox') }}
-                {{ form.m16_bonus.label(class_='inline') }}
-            </div>
-        </section>
-
-        <section>
-            <h2>{{ form.m17_title }}</h2>
-
-            <div class="form-input">
-                {{ form.m17_complete.label }}
-
-                {% if form.m17_complete.errors %}
-                    {{ form.m17_complete(class_='input-radio input-error') }}
-                {% else %}
-                    {{ form.m17_complete(class_='input-radio', onchange='toggle_bonus(this.id)' )}}
-                {% endif %}
-            </div>
-
-            <div class="form-input">
-                {{ form.m17_bonus(class_='input-checkbox') }}
-                {{ form.m17_bonus.label(class_='inline') }}
-            </div>
-        </section>
-
-        <section>
-            <h2>{{ form.m18_title }}</h2>
-
-            <div class="form-input">
-                {{ form.m18_complete.label }}
-
-                {% if form.m18_complete.errors %}
-                    {{ form.m18_complete(class_='input-radio input-error') }}
-                {% else %}
-                    {{ form.m18_complete(class_='input-radio') }}
-                {% endif %}
-            </div>
-        </section>
 
         <section>
             <h2>{{ form.penalties_title }}</h2>
