@@ -83,56 +83,67 @@ class ScoreRoundForm(FlaskForm):
     score = IntegerField('Total score', validators=[Optional()])
 
     # example before
-    """
-    m01_complete = SelectField('Send Payload rockets (carts) down the Space Travel Ramp.',
-                              choices=[('True', 'Independent'), # TODO make this logic work
-                                       ('10', 'Crew Payload '),
-                                       ('14', 'Supply Payload '),
-                                       ('22', 'Vehicle Payload ')],
-                              default='0',
-                              validators=[InputRequired('Please make a choice for M01.')])
-    """
+
     # and after desired changes
     m01_label = 'Send Payload rockets (carts) down the Space Travel Ramp.'
     m01_independent = BonusField('Cart was independent by the time it made the first track connection', value='true')
     m01_crew = BonusField('Crew Payload', value='10')
     m01_supply = BonusField('Supply payload', value='14')
-    m01_vehicle = BonusField('Vehicle payload', value='22')    
+    m01_vehicle = BonusField('Vehicle payload', value='22')
 
 
-    m02_complete = SelectField('Solar Panels need to be angled toward or away from you, '
+    m02_complete = RadioField('Solar Panels need to be angled toward or away from you, '
                               'depending on strategy and conditions.',
                               choices=[('18', 'Your Solar Panel is Angled toward the other team’s field'),
                                        ('22', 'Both Solar Panels are angled towards the same field')],
                                validators=[Optional()])
 
-    m03_complete = SelectField('The Regolith Core must be placed into the 3D Printer, '
-                              'the ejected 2x4 Brick can be delivered for more points.',
-                              choices=[('18', '2x4 Brick completely ejected from the printer by placing a Regolith Core Sample into it'),
-                                       ('4', 'Brick completely in Northeast Planet Area ')],
-                              validators=[Optional()])
+    # m03_complete = SelectField('The Regolith Core must be placed into the 3D Printer, '
+    #                           'the ejected 2x4 Brick can be delivered for more points.',
+    #                           choices=[('18', '2x4 Brick completely ejected from the printer by placing a Regolith Core Sample into it'),
+    #                                    ('4', 'Brick completely in Northeast Planet Area ')],
+    #                           validators=[Optional()])
 
-    m04_complete = SelectField('The Robot or whatever agent-craft it sends out needs to cross '
-                              'the Craters Model, by driving directly over it.',
-                              choices=[('0', 'Robot or Agent crossed completely east to west between the towers'),
-                                       ('20', 'Gate completely flattened')], # TODO both must be selected to score points
-                              validators=[Optional()])
+    m03_label = 'The Regolith Core must be placed into the 3D Printer, the ejected 2x4 Brick can be delivered for more points.'
+    m03_ejected = BonusField('2x4 Brick completely ejected from the printer by placing a Regolith Core Sample into it', value=18)
+    m03_planet_area = BonusField('Brick completely in Northeast Planet Area ', value=4)
 
-    m05_complete = SelectField('The Robot must get all the Core Samples out of the Core Site.',
-                              choices=[('16', 'All samples moved no longer touching Core Site Model Axis'),
-                                # TODO add logic so only one of the below choices are available
-                                       ('12', 'Gas Core Sample touching the mat and completely in the Lander’s Target Circle'), # Option 1
-                                       ('10', 'Gas Core Sample completely in Base'), # Option 2
-                                       ('12', 'Water Core Sample supported only by the Food Growth Chamber')
-                                       ],
-                              validators=[Optional()])
+    # m04_complete = SelectField('The Robot or whatever agent-craft it sends out needs to cross '
+    #                           'the Craters Model, by driving directly over it.',
+    #                           choices=[('0', 'Robot or Agent crossed completely east to west between the towers'),
+    #                                    ('20', 'Gate completely flattened')], # TODO both must be selected to score points
+    #                           validators=[Optional()])
 
-    m06_complete = SelectField('The Robot needs to remove and insert Modules among the '
-                              'Habitation Hub port holes.',
-                              choices=[('16', 'Cone Module completely in base'),
-                                       ('16', 'Tube Module in Habitation Hub Port West Side, touching nothing but the Habitation Hub'),
-                                       ('14', 'Docking Module in Habitation Hub Port East Side, touching nothing but the Habitation Hub')],
-                              validators=[Optional()])
+    m04_label = 'The Robot or whatever agent-craft it sends out needs to cross the Craters Model, by driving directly over it.'
+    m04_crossed = BonusField('Robot or Agent crossed completely east to west between the towers')
+    m04_gate = BonusField('Gate completely flattened', value='20')
+
+    # m05_complete = SelectField('The Robot must get all the Core Samples out of the Core Site.',
+    #                           choices=[('16', 'All samples moved no longer touching Core Site Model Axis'),
+    #                             # TODO add logic so only one of the below choices are available
+    #                                    ('12', 'Gas Core Sample touching the mat and completely in the Lander’s Target Circle'), # Option 1
+    #                                    ('10', 'Gas Core Sample completely in Base'), # Option 2
+    #                                    ('12', 'Water Core Sample supported only by the Food Growth Chamber')
+    #                                    ],
+    #                           validators=[Optional()])
+
+    m05_label = 'The Robot must get all the Core Samples out of the Core Site.'
+    m05_all_samples = BonusField('All samples moved no longer touching Core Site Model Axis', value=16)
+    m05_gas_core_touching = BonusField('Gas Core Sample touching the mat and completely in the Lander’s Target Circle', value=12)
+    m05_gas_core_completely = BonusField('Gas Core Sample completely in Base', value=12)
+    m05_water_core = BonusField('Water Core Sample supported only by the Food Growth Chamber', value=12)
+
+    # m06_complete = SelectField('The Robot needs to remove and insert Modules among the '
+    #                           'Habitation Hub port holes.',
+    #                           choices=[('16', 'Cone Module completely in base'),
+    #                                    ('16', 'Tube Module in Habitation Hub Port West Side, touching nothing but the Habitation Hub'),
+    #                                    ('14', 'Docking Module in Habitation Hub Port East Side, touching nothing but the Habitation Hub')],
+    #                           validators=[Optional()])
+
+    m06_label = 'The Robot needs to remove and insert Modules among the Habitation Hub port holes.'
+    m06_completely = BonusField('Cone Module completely in base', value=16)
+    m06_tube = BonusField('Tube Module in Habitation Hub Port West Side, touching nothing but the Habitation Hub', value=16)
+    m06_docking = BonusField('Docking Module in Habitation Hub Port East Side, touching nothing but the Habitation Hub', value=14)
 
     m07_complete = RadioField('The Robot needs to get Gerhard’s body into the Airlock Chamber.',
                               choices=[('0', 'Gerhard’s body not in airlock chamber'),
@@ -225,14 +236,12 @@ class ScoreRoundForm(FlaskForm):
 
     def points_scored(self) -> (int, str):
         """Calculate the points scored for this round."""
-       # self.m01_complete = CompleteField([self.m01_independent, self.m01_crew, self.m01_supply, self.m01_vehicle], 'Send greg rockets (carts) down the Space Travel Ramp.')
         score_breakdown = {
-            #'m01_score': int(self.m01_complete.data),
             'm02_score': int(self.m02_complete.data),
-            'm03_score': int(self.m03_complete.data),
-            'm04_score': int(self.m04_complete.data),
-            'm05_score': int(self.m05_complete.data),
-            'm06_score': int(self.m06_complete.data),
+            'm03_score': (self.m03_ejected.data * self.m03_ejected.value) + (self.m03_planet_area.data * self.m03_planet_area.value),
+            'm04_score': self.m04_crossed.data * self.m04_gate.data * self.m04_gate.value,
+            'm05_score': (self.m05_all_samples.data * self.m05_all_samples.value) + (self.m05_water_core.data * self.m05_water_core.value) + (self.m05_gas_core_completely.data * self.m05_gas_core_completely.value) + (self.m05_gas_core_touching.data * self.m05_gas_core_touching.value),
+            'm06_score': (self.m06_completely.data * self.m06_completely.value) + (self.m06_tube.data * self.m06_tube.value) + (self.m06_docking.data * self.m06_docking.value),
             'm07_score': int(self.m07_complete.data),
             'm08_score': int(self.m08_complete.data),
             'm09_score': int(self.m09_complete.data),
@@ -240,13 +249,11 @@ class ScoreRoundForm(FlaskForm):
             'm11_score': int(self.m11_complete.data),
             'm12_score': int(self.m12_complete.data),
             'm13_score': int(self.m13_complete.data),
-            'm14_score': int(self.m14_complete.data),
+            # 'm14_score': int(self.m14_complete.data),
             'm15_score': int(self.m15_complete.data),
             'penalties': -int(self.penalties_chosen.data)
         }
-        self.m01_crew.value
 
         score = sum(score_breakdown.values()) if sum(score_breakdown.values()) else 0
         score_breakdown = str(score_breakdown)
-
         return score, score_breakdown
