@@ -50,20 +50,16 @@
                     {{ form.m01_label }}
                 </div>
                 <div>
-                    {{ form.m01_independent }}
-                    {{ form.m01_independent.label }}
-                </div>
-                <div>
-                    {{ form.m01_crew }}
-                    {{ form.m01_crew.label }}
+                    {{ form.m01_vehicle}}
+                    {{ form.m01_vehicle.label}}
                 </div>
                 <div>
                     {{ form.m01_supply}}
                     {{ form.m01_supply.label}}
                 </div>
                 <div>
-                    {{ form.m01_vehicle}}
-                    {{ form.m01_vehicle.label}}
+                    {{ form.m01_crew }}
+                    {{ form.m01_crew.label }}
                 </div>
             </div>
         </section>
@@ -104,13 +100,17 @@
             <h2>{{ form.m04_title }}</h2>
 
             <div class="form-input">
-                {{ form.m04_complete.label }}
-
-                {% if form.m04_complete.errors %}
-                    {{ form.m04_complete(class_='input-radio input-error') }}
-                {% else %}
-                    {{ form.m04_complete(class_='input-radio') }}
-                {% endif %}
+                <div>
+                {{ form.m04_label }}
+                </div>
+                <div>
+                    {{ form.m04_crossed }}
+                    {{ form.m04_crossed.label }}
+                </div>
+                <div>
+                    {{ form.m04_gate }}
+                    {{ form.m04_gate.label }}
+                </div>
             </div>
         </section>
 
@@ -118,13 +118,25 @@
             <h2>{{ form.m05_title }}</h2>
 
             <div class="form-input">
-                {{ form.m05_complete.label }}
-
-                {% if form.m05_complete.errors %}
-                    {{ form.m05_complete(class_='input-radio input-error') }}
-                {% else %}
-                    {{ form.m05_complete(class_='input-radio') }}
-                {% endif %}
+                <div>
+                    {{ form.m05_label }}
+                </div>
+                <div>
+                    {{ form.m05_all_samples }}
+                    {{ form.m05_all_samples.label }}
+                </div>
+                <div>
+                    {{ form.m05_gas_core_touching }}
+                    {{ form.m05_gas_core_touching.label }}
+                </div>
+                <div>
+                    {{ form.m05_gas_core_completely }}
+                    {{ form.m05_gas_core_completely.label }}
+                </div>
+                <div>
+                    {{ form.m05_water_core }}
+                    {{ form.m05_water_core.label }}
+                </div>
             </div>
         </section>
 
@@ -132,13 +144,21 @@
             <h2>{{ form.m06_title }}</h2>
 
             <div class="form-input">
-                {{ form.m06_complete.label }}
-
-                {% if form.m06_complete.errors %}
-                    {{ form.m06_complete(class_='input-radio input-error') }}
-                {% else %}
-                    {{ form.m06_complete(class_='input-radio') }}
-                {% endif %}
+                <div>
+                    {{ form.m06_label }}
+                </div>
+                <div>
+                    {{ form.m06_completely }}
+                    {{ form.m06_completely.label }}
+                </div>
+                <div>
+                    {{ form.m06_tube }}
+                    {{ form.m06_tube.label }}
+                </div>
+                <div>
+                    {{ form.m06_docking }}
+                    {{ form.m06_docking.label }}
+                </div>
             </div>
         </section>
 

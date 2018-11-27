@@ -86,15 +86,15 @@ class ScoreRoundForm(FlaskForm):
 
     # and after desired changes
     m01_label = 'Send Payload rockets (carts) down the Space Travel Ramp.'
-    m01_independent = BonusField('Cart was independent by the time it made the first track connection', value='true')
-    m01_crew = BonusField('Crew Payload', value='10')
-    m01_supply = BonusField('Supply payload', value='14')
-    m01_vehicle = BonusField('Vehicle payload', value='22')
+    m01_vehicle = BonusField('Vehicle payload met start and independence conditions', value=22)
+    m01_supply = BonusField('Supply payload met start and independence conditions', value=14)
+    m01_crew = BonusField('Crew Payload met start and independence conditions', value=10)
 
     m02_complete = RadioField('Solar Panels need to be angled toward or away from you, '
                               'depending on strategy and conditions.',
                               choices=[('18', 'Your Solar Panel is Angled toward the other team’s field'),
                                        ('22', 'Both Solar Panels are angled towards the same field')],
+                              default='18',
                               validators=[Optional()])
 
     # m03_complete = SelectField('The Regolith Core must be placed into the 3D Printer, '
@@ -116,7 +116,7 @@ class ScoreRoundForm(FlaskForm):
 
     m04_label = 'The Robot or whatever agent-craft it sends out needs to cross the Craters Model, by driving directly over it.'
     m04_crossed = BonusField('Robot or Agent crossed completely east to west between the towers')
-    m04_gate = BonusField('Gate completely flattened', value='20')
+    m04_gate = BonusField('Gate completely flattened', value=20)
 
     # m05_complete = SelectField('The Robot must get all the Core Samples out of the Core Site.',
     #                           choices=[('16', 'All samples moved no longer touching Core Site Model Axis'),
@@ -201,7 +201,8 @@ class ScoreRoundForm(FlaskForm):
     m13_complete = RadioField('Rotate the Observatory to a precise direction.',
                               choices=[('0', 'Tip not in any coloured section'),
                                        (
-                                       '16', 'Tip completely in gray, or partly covering either of gray’s end-borders'),
+                                           '16',
+                                           'Tip completely in gray, or partly covering either of gray’s end-borders'),
                                        ('18', 'Tip completely in white'),
                                        ('20',
                                         'Tip completely in orange, or partly covering either of orange’s end-borders')],
@@ -246,16 +247,19 @@ class ScoreRoundForm(FlaskForm):
     def points_scored(self) -> (int, str):
         """Calculate the points scored for this round."""
         score_breakdown = {
+            'm01_score': int(
+                (self.m01_vehicle.data * self.m01_vehicle.value) + (self.m01_supply.data * self.m01_supply.value) + (
+                        self.m01_crew.data * self.m01_crew.value)),
             'm02_score': int(self.m02_complete.data),
-            'm03_score': (self.m03_ejected.data * self.m03_ejected.value) + (
-                    self.m03_planet_area.data * self.m03_planet_area.value),
-            'm04_score': self.m04_crossed.data * self.m04_gate.data * self.m04_gate.value,
-            'm05_score': (self.m05_all_samples.data * self.m05_all_samples.value) + (
-                    self.m05_water_core.data * self.m05_water_core.value) + (
+            'm03_score': int((self.m03_ejected.data * self.m03_ejected.value) + (
+                self.m03_planet_area.data * self.m03_planet_area.value)),
+            'm04_score': int(self.m04_crossed.data * self.m04_gate.data * self.m04_gate.value),
+            'm05_score': int((self.m05_all_samples.data * self.m05_all_samples.value) + (
+                self.m05_water_core.data * self.m05_water_core.value) + (
                                  self.m05_gas_core_completely.data * self.m05_gas_core_completely.value) + (
-                                 self.m05_gas_core_touching.data * self.m05_gas_core_touching.value),
-            'm06_score': (self.m06_completely.data * self.m06_completely.value) + (
-                    self.m06_tube.data * self.m06_tube.value) + (self.m06_docking.data * self.m06_docking.value),
+                                 self.m05_gas_core_touching.data * self.m05_gas_core_touching.value)),
+            'm06_score': int((self.m06_completely.data * self.m06_completely.value) + (
+                self.m06_tube.data * self.m06_tube.value) + (self.m06_docking.data * self.m06_docking.value)),
             'm07_score': int(self.m07_complete.data),
             'm08_score': int(self.m08_complete.data),
             'm09_score': int(self.m09_complete.data),
