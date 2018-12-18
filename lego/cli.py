@@ -1,16 +1,16 @@
-# -------------------------------------------------------------------------------------------------
-# Command line interface extensions to the defaults provided by flask.
-#
-# Provides the following commands:
-# - init: Initialises the application database, creates the default users, creates the practice
-#       team and sets the stage.
-# - secret: Generates a secret key to be used in config.py.
-# - add-teams: Add teams to the database.
-# - list-teams: List the teams currently in the database.
-# - reset-teams: Remove all non-practice teams from the database.
-# - stage: Move the stage forwards or backwards. This is for advanced usage only and should not be
-#       required while running the event itself.
-# -------------------------------------------------------------------------------------------------
+"""
+Command line interface extensions to the defaults provided by flask.
+
+Provides the following commands:
+- init: Initialises the application database, creates the default users, creates the practice
+      team and sets the stage.
+- secret: Generates a secret key to be used in config.py.
+- add-teams: Add teams to the database.
+- list-teams: List the teams currently in the database.
+- reset-teams: Remove all non-practice teams from the database.
+- stage: Move the stage forwards or backwards. This is for advanced usage only and should not be
+      required while running the event itself.
+"""
 
 from base64 import b64encode
 import os
@@ -31,6 +31,7 @@ seed()
     help='Initialise the application by creating the database and the default '
          'users - Admin and Judge.')
 def init_app():
+    """Initialise Application."""
     click.echo('Initialising application...')
     db.create_all()
     click.echo('Database created.')
@@ -57,9 +58,9 @@ def init_app():
 
 
 def _request_password(user: str, default: str):
-    '''
+    """
     Helper for requesting a password to be input.
-    '''
+    """
     pword = click.prompt('Enter password for {!s}'.format(user), hide_input=True, default=default)
 
     # allow them to use the default
@@ -80,6 +81,7 @@ def _request_password(user: str, default: str):
     help='Generate a secret key to set in config.py. The key is used to encrypt '
          'the session cookie to prevent session hijacking.')
 def secret():
+    """Generate key."""
     key = b64encode(os.urandom(64)).decode('utf-8')
     click.echo(key)
 
@@ -89,6 +91,7 @@ def secret():
     help='Add teams to the database from a file. The file should contain one team per line.')
 @click.argument('file', type=click.File())
 def add_teams(file: str):
+    """Add teams."""
     _add_teams(file)
 
 def _add_teams(file: str):
@@ -121,6 +124,7 @@ def _add_teams(file: str):
     short_help='Remove all teams from the database.')
 @click.option('-y', is_flag=True, help='Skip confirmation.')
 def reset_teams(y: bool):
+    """Resest teams."""
     no_confirm = y
 
     if not no_confirm:
@@ -137,6 +141,7 @@ def reset_teams(y: bool):
 @click.option('--no-practice', is_flag=True, help='Don\'t include the practice team.')
 @click.option('--active', is_flag=True, help='Only show teams that aren\'t currently active.')
 def list_teams(no_practice: bool, active: bool):
+    """List teams."""
     filters = {}
 
     if no_practice:
@@ -162,9 +167,9 @@ def set_stage():
 
 
 def _set_stage(stage: int=None, no_confirm: bool=False):
-    '''
+    """
     Helper for setting the stage.
-    '''
+    """
     stage_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tmp', '.stage')
 
     while True:
@@ -203,6 +208,7 @@ def _set_stage(stage: int=None, no_confirm: bool=False):
     help='Simulate a run through the competition. Will pause at the end of each round. '
          'WARNING: This will remove any existing teams from the database.')
 def simulate():
+    """Simulate rounds."""
     # empty the teams first
     click.echo('Resetting teams')
     Team.query.filter_by(is_practice=False).delete()

@@ -1,8 +1,8 @@
-# -------------------------------------------------------------------------------------------------
-# Routing for the application.
-#
-# This is essentially the controllers for the application in terms of MVC, but all in one.
-# -------------------------------------------------------------------------------------------------
+"""
+Routing for the application.
+
+This is essentially the controllers for the application in terms of MVC, but all in one.
+"""
 
 from functools import cmp_to_key
 import os
@@ -22,26 +22,26 @@ import lego.util as util
 
 @app.before_request
 def before_request():
-    '''
+    """
     Set up user global.
-    '''
+    """
     g.user = current_user
 
 
 @app.context_processor
 def override_url_for():
-    '''
+    """
     Override for addding a cache buster to static assets.
-    '''
+    """
     return dict(url_for=dated_url_for)
 
 
 def dated_url_for(endpoint, **values):
-    '''
+    """
     Append a cache buster to static assets.
 
     Based on: <http://flask.pocoo.org/snippets/40/>
-    '''
+    """
     if endpoint == 'static':
         filename = values.get('filename', None)
 
@@ -55,9 +55,9 @@ def dated_url_for(endpoint, **values):
 
 @app.after_request
 def after_request(response):
-    '''
+    """
     Log all requests.
-    '''
+    """
     app.logger.info('%s %s %s %s %s',
                     request.remote_addr,
                     request.method,
@@ -69,12 +69,12 @@ def after_request(response):
 
 @app.template_filter('slugify')
 def slugify(value: str):
-    '''
+    """
     Normalizes string, converts to lowercase, removes non-alpha characters,
     and converts spaces to hyphens.
 
     Based on: <https://gist.github.com/berlotto/6295018>.
-    '''
+    """
     if not value:
         return ''
 
@@ -90,34 +90,34 @@ def slugify(value: str):
 
 @app.errorhandler(403)
 def permission_denied(error):
-    '''
+    """
     403 (permission denied) error handler.
-    '''
+    """
     return render_template('errors/403.html', title='Permission denied'), 403
 
 
 @app.errorhandler(404)
 def page_not_found(error):
-    '''
+    """
     404 (page not found) error handler.
-    '''
+    """
     return render_template('errors/404.html', title='Page not found'), 404
 
 
 @app.errorhandler(Exception)
 def internal_server_error(exc):
-    '''
+    """
     500 (internal error) error handler.
-    '''
+    """
     app.logger.exception(exc)
     return render_template('errors/500.html', title='Internal error'), 500
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    '''
+    """
     Login page
-    '''
+    """
     if g.user is not None and g.user.is_authenticated:
         return redirect(url_for('home'))
 
@@ -141,11 +141,11 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
-    '''
+    """
     Logout page.
 
     Not strictly a page as it immediately redirects.
-    '''
+    """
     logout_user()
     return redirect(url_for('home'))
 
@@ -153,9 +153,9 @@ def logout():
 @app.route('/')
 @app.route('/home')
 def home():
-    '''
+    """
     Home page.
-    '''
+    """
     teams = Team.query.filter_by(is_practice=False).order_by(asc('number')).all()
     return render_template('home.html', title='Home', teams=teams)
 
@@ -447,9 +447,9 @@ def admin_team_score_edit(id: int):
 @app.route('/admin/team/<int:id>/score/reset', methods=['GET', 'POST'])
 @login_required
 def admin_team_score_reset(id: int):
-    '''
+    """
     For resetting a team's score for a specific round.
-    '''
+    """
     if not current_user.is_admin:
         return abort(403)
 
@@ -478,9 +478,9 @@ def admin_team_score_reset(id: int):
 @app.route('/admin/stage', methods=['GET', 'POST'])
 @login_required
 def admin_stage():
-    '''
+    """
     For moving the stage forward.
-    '''
+    """
     if not current_user.is_admin:
         return abort(403)
 
@@ -514,9 +514,9 @@ def admin_stage():
 
 
 def set_active_teams(stage):
-    '''
+    """
     Helper for setting the active teams after a stage has been moved forward.
-    '''
+    """
     teams = Team.query.filter_by(active=True, is_practice=False).all()
     teams = sorted(teams, key=cmp_to_key(util.compare_teams))
 
@@ -550,9 +550,9 @@ def set_active_teams(stage):
 
 @app.route('/admin/manage_active_teams', methods=['GET', 'POST'])
 def admin_manage_active_teams():
-    '''
+    """
     For managing active teams if the automatic setting is not sufficient.
-    '''
+    """
     if not current_user.is_admin:
         return abort(403)
 

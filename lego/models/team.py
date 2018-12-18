@@ -1,6 +1,4 @@
-# -----------------------------------------------------------------------------
-# The model for a team in the database.
-# -----------------------------------------------------------------------------
+"""The model for a team in the database."""
 
 from sqlalchemy.ext.hybrid import hybrid_property
 
@@ -11,6 +9,7 @@ __all__ = ['Team']
 
 
 class Team(db.Model):
+    """Team."""
     __tablename__ = 'team'
 
     id = db.Column(db.Integer, primary_key=True)

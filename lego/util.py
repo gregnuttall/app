@@ -14,7 +14,7 @@ __all__ = ['create_log_handler', 'load_stage', 'compare_teams']
 MB = 1024 * 1024
 
 def create_log_handler(name, level=logging.DEBUG, size=MB, count=5) -> RotatingFileHandler:
-    '''
+    """
     Create a rotating log file handler for use by the application.
 
     :param name: A string representing the name of the log file without the file extension, e.g.
@@ -25,7 +25,7 @@ def create_log_handler(name, level=logging.DEBUG, size=MB, count=5) -> RotatingF
     :param count: The maximum number of log files to keep. Defaults to 5.
 
     :return: The logging handler.
-    '''
+    """
     logging.basicConfig(level=level)
     log_dir = os.path.join(os.path.dirname(__file__), 'logs')
     log_file = '{!s}.log'.format(name)
@@ -42,7 +42,7 @@ def create_log_handler(name, level=logging.DEBUG, size=MB, count=5) -> RotatingF
 
 
 def load_stage() -> int:
-    '''
+    """
     Load the current stage.
 
     :return: An integer representing the current stage:
@@ -51,7 +51,7 @@ def load_stage() -> int:
         - 2: Quarter final
         - 3: Semi final
         - 4: Final
-    '''
+    """
     cur_path = os.path.dirname(os.path.abspath(__file__))
     stage_path = os.path.join(cur_path, 'tmp', '.stage')
 
@@ -66,9 +66,9 @@ def load_stage() -> int:
 
 
 def compare_teams(team_1, team_2) -> int:
-    '''
+    """
     Comparison function for comparing teams.
-    '''
+    """
     if team_1 < team_2:
         return 1
 

@@ -1,22 +1,19 @@
-# -----------------------------------------------------------------------------
-# Configuration for the Lego Challenge application.
-#
-# See the manual for what these do.
-# -----------------------------------------------------------------------------
+"""
+Configuration for the Lego Challenge application.
+
+See the manual for what these do.
+"""
 
 from os import path
 
-# ----------------
-# Helper functions
-# ----------------
+
 def db_uri() -> str:
-    '''
+    """
     Generate the path for the database file.
-    '''
+    """
     cur_dir = path.dirname(path.abspath(__file__))
     db_dir = path.join(cur_dir, 'tmp')
 
-    # TODO: make this configurable via env vars
     if True:
         db_file = 'app.db'
     else:

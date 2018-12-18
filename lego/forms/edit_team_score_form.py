@@ -1,8 +1,8 @@
-# -----------------------------------------------------------------------------
-# A form for editing teams scores.
-#
-# To be used by Admin accounts.
-# -----------------------------------------------------------------------------
+"""
+A form for editing teams scores.
+
+To be used by Admin accounts.
+"""
 
 from flask_wtf import FlaskForm
 from wtforms import SelectField, HiddenField
@@ -11,6 +11,7 @@ from wtforms.validators import DataRequired, NumberRange
 
 
 class EditTeamScoreForm(FlaskForm):
+    """Edit Team Score Form."""
     id = HiddenField('Id', validators=[DataRequired()])
     stage = SelectField('Stage',
                         choices=[('attempt_1', 'Round 1 - Attempt 1'),

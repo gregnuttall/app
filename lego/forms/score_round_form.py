@@ -1,8 +1,8 @@
-# -----------------------------------------------------------------------------
-# The form used for scoring the active round.
-#
-# Needs to be updated each year with the new tasks.
-# -----------------------------------------------------------------------------
+"""
+The form used for scoring the active round.
+
+Needs to be updated each year with the new tasks.
+"""
 
 from flask_wtf import FlaskForm
 from wtforms import RadioField, BooleanField, SelectField, IntegerField, HiddenField, Form, FormField, FieldList
@@ -13,8 +13,10 @@ import os
 from collections import OrderedDict
 
 
-# parses json file and generates a FieldList full of FieldLists for all the missions
 def parse_json(path):
+    """
+    Parses json file and generates a FieldList full of FieldLists for all the missions
+    """
     json_data = json.load(open(path))
     # ordered dict to ensure that missions are displayed in the correct order
     missions = OrderedDict()
@@ -47,6 +49,7 @@ def parse_json(path):
 
 
 class BonusField(BooleanField):
+    """Bonus Field."""
     def __init__(self, label=None, validators=None, false_values=None, value=None, **kwargs):
         super().__init__(label, validators, false_values, **kwargs)
         self.value = value
@@ -60,10 +63,12 @@ class BonusField(BooleanField):
 
         return 'y'
 
-
-# extension to the Form class to allow the form to generate a score based on the fields it contains
 class ScoredForm(Form):
+    """Form."""
     def score(self):
+        """
+        Extension to the form class to allow the form to generate a score based on the fields it contains.
+        """
         score = 0
 
         # gets the score for every type of field and returns the result for the mission
@@ -84,7 +89,7 @@ class ScoredForm(Form):
 
 
 class ScoreRoundForm(FlaskForm):
-    # fields
+    """ Fields """
     team = SelectField('Team:', validators=[InputRequired(message='Please select a team.')])
     yellow_card = BooleanField('Yellow card')
     confirm = HiddenField(default=0)

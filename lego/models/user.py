@@ -1,6 +1,4 @@
-# -----------------------------------------------------------------------------
-# The model for a user in the database.
-# -----------------------------------------------------------------------------
+"""The model for a user in the database."""
 
 from lego import db
 
@@ -9,6 +7,7 @@ __all__ = ['User']
 
 
 class User(db.Model):
+    """User."""
     __tablename__ = 'user'
 
     id = db.Column(db.Integer, primary_key=True)

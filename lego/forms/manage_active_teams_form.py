@@ -1,6 +1,4 @@
-# -----------------------------------------------------------------------------
-# A form for moving up the stages.
-# -----------------------------------------------------------------------------
+"""A form for moving up the stages."""
 
 from flask_wtf import FlaskForm
 from wtforms import BooleanField
@@ -9,6 +7,7 @@ from lego.models import Team
 
 
 def generate_manage_active_teams_form():
+    """Generates manage active teams form."""
     class ManageActiveTeamsForm(FlaskForm):
         pass
 
