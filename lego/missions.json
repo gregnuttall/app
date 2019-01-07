@@ -20,19 +20,20 @@
             "value": "22"
         }
     ],
-    "M02 - Solar Panel Array": [
+    "M02 - Solar Panel Array":  [
         {
-            "type": "RadioField",
-            "string": "Solar Panels need to be angled toward or away from you, depending on strategy and conditions.",
-            "choices": [
-                {
-                    "string": "Your Solar Panel is Angled toward the other team's field",
-                    "value": "18"
-                }, {
-                    "string": "Both Solar Panels are angled towards the same field",
-                    "value": "22"
-                }
-            ]
+            "type": "StringField",
+            "string": "Solar Panels need to be angled toward or away from you, depending on strategy and conditions."
+        },
+        {
+            "type": "BonusField",
+            "string": "Your Solar Panel is Angled toward the other team's field",
+            "value": "18"
+        },
+        {
+            "type": "BonusField",
+            "string": "Both Solar Panels are angled towards the same field",
+            "value": "22"
         }
     ],
     "M03 - 3D Printing": [

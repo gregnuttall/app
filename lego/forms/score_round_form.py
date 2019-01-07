@@ -5,7 +5,7 @@ Needs to be updated each year with the new tasks.
 """
 
 from flask_wtf import FlaskForm
-from wtforms import RadioField, BooleanField, SelectField, IntegerField, HiddenField, Form, FormField, FieldList
+from wtforms import RadioField, BooleanField, SelectField, IntegerField, StringField, HiddenField, Form, FormField, FieldList
 from wtforms.compat import text_type
 from wtforms.validators import InputRequired, Optional
 import json
@@ -29,8 +29,8 @@ def parse_json(path):
             # converts the task_no to a string to avoid a crash
             task_no = str(task_no)
             # checks the data type and instantiates the fields based on the data type
-            if data['type'] == 'String':
-                mission['label'] = data['string']
+            if data['type'] == 'StringField':
+                mission['label'] = globals()[data['type']](data['string'])
             elif data['type'] == 'BooleanField':
                 mission[task_no] = globals()[data['type']](data['string'])
             elif data['type'] == 'BonusField':
@@ -44,6 +44,7 @@ def parse_json(path):
                                                            validators=[Optional()])
         # generates the mission specific FieldList and adds it to the dict to be used for creating the full list
         missions[key] = FieldList(FormField(type(str(task_no), (ScoredForm,), mission)), min_entries=1)
+
     # generates FiledList containing each missions FieldList
     return FieldList(FormField(type('Missions', (Form,), missions)), min_entries=1)
 
@@ -73,9 +74,9 @@ class ScoredForm(Form):
 
         # gets the score for every type of field and returns the result for the mission
         for _, task in self._fields.items():
-            if isinstance(task, str):
+            if isinstance(task, StringField):
                 # strings do not carry any score
-                pass
+                continue
             elif isinstance(task, BonusField):
                 score += task.data * int(task.value)
             elif isinstance(task, BooleanField):
@@ -106,7 +107,13 @@ class ScoreRoundForm(FlaskForm):
         for mission_name, mission in self.missions.entries[0].form._fields.items():
             score_breakdown[mission_name] = mission.entries[0].form.score()
 
-        score = sum(score_breakdown.values()) if sum(score_breakdown.values()) else 0
+        if sum(score_breakdown.values()):
+            score = sum(score_breakdown.values())
+        else:
+            score = 0
+        # ensure score is not less than 0    
+        if score < 0:
+            score = 0
         score_breakdown = str(score_breakdown)
 
         return score, score_breakdown

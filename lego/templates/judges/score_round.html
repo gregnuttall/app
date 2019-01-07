@@ -48,8 +48,11 @@
                     {{ mission.label }}
                 </h2>
                 {% for field in mission.entries[0] %}
+                <div>
+                    {% if field.type == "StringField" %}
+                        {{ field.label }}
+                    {% endif %}
                     {% if field.type == "BooleanField" or field.type == "BonusField" %}
-                        <!-- needs a check to throw an error if the field is -->
                         {{ field(class_='input-checkbox error') }}
                         {{ field.label }}
                     {% endif %}
@@ -66,10 +69,10 @@
                         {% if field.errors %}
                             {{ field(class_='input-select input-error') }}
                         {% else %}
-                            {{ field(class_='input-select') }}
+                            {{ field(onchange='validateInput(this)', class_='input-select') }}
                         {% endif %}
                     {% endif %}
-                    <br>
+                </div>
                 {% endfor %}
             </section>
         {% endfor %}
@@ -116,53 +119,6 @@
 
     $(init)
 }(jQuery))
-
-// js form helper
-function toggle_bonus(id){
-    var form_id = id.substring(0,3)
-    var form_bonus = document.getElementById(form_id+'_bonus')
-    form_bonus.disabled = !document.getElementById(id+'-0').checked
-
-    if(form_bonus.disabled){
-        form_bonus.checked = false
-    }
-}
-
-function inital_startup(){ 
-    var inputs = document.getElementsByTagName('input')
-    var checkboxes = []
-    for(i = 0;i < inputs.length; i++){
-        if(inputs[i].type=='checkbox'){
-            checkboxes.push(inputs[i])
-        }
-    }
-    for(i = 0 ; i < checkboxes.length; i++){
-        if(checkboxes[i].id.search('bonus') != -1 ){
-            try{
-                toggle_bonus(checkboxes[i].id.substring(0,3)+'_complete')
-            } catch(err){
-                console.log(err)
-                try{
-                    toggle_bonus(checkboxes[i].id.substring(0,3)+'_part_1')
-                } catch (err) {
-                    console.log(err)
-                }
-            }
-        }
-    }
-    dropdown_bonus_toggle('m08_complete', 30)
-}
-// Toggle bonus for the drop down m08
-function dropdown_bonus_toggle(id, target){
-    var form_id = id.substring(0,3)
-    var bonus = document.getElementById(form_id + '_bonus')
-    if(document.getElementById(id).value == target){
-        bonus.disabled = false
-    } else {
-        bonus.checked = false
-        bonus.disabled = true
-    }
-}
-inital_startup()
 </script>
+<script src="../../static/selection_validation.js"></script>
 {% endblock %}
