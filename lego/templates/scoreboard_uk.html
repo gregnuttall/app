@@ -33,10 +33,6 @@
                     {% endif %}
                 {% endif %}
 
-                {% if round_2 %}
-                    <th>R2</th>
-                {% endif %}
-
                 {% if quarter_final %}
                     <th>Quarter</th>
                 {% endif %}
@@ -73,14 +69,6 @@
                             <td>-</td>
                         {% else %}
                             <td>{{ team.highest_score }}</td>
-                        {% endif %}
-                    {% endif %}
-
-                    {% if round_2 %}
-                        {% if team.round_2 is none %}
-                            <td>-</td>
-                        {% else %}
-                            <td>{{ team.round_2 }}</td>
                         {% endif %}
                     {% endif %}
 
@@ -183,7 +171,7 @@
             } else {
                 $links.find('.next').click();
             }
-        }, 5000);
+        }, 6000);
     }
 
     function init() {
