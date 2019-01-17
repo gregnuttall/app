@@ -15,10 +15,6 @@
             <th>R1-3</th>
             <th>R1-Best</th>
 
-            {% if show_round_2 %}
-                <th>R2</th>
-            {% endif %}
-
             <th>Quarter Final</th>
             <th>Semi Final</th>
             <th>Final 1</th>
@@ -38,10 +34,6 @@
                 <td>{% if team.attempt_2 is none %} - {% else %} {{ team.attempt_2 }} {% endif %}</td>
                 <td>{% if team.attempt_3 is none %} - {% else %} {{ team.attempt_3 }} {% endif %}</td>
                 <td>{% if team.best_attempt is none %} - {% else %} {{ team.best_attempt }} {% endif %}</td>
-
-                {% if show_round_2 %}
-                    <td>{% if team.round_2 is none %} - {% else %} {{ team.round_2 }} {% endif %}</td>
-                {% endif %}
 
                 <td>{% if team.quarter is none %} - {% else %} {{ team.quarter }} {% endif %}</td>
                 <td>{% if team.semi is none %} - {% else %} {{ team.semi }} {% endif %}</td>

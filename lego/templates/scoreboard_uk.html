@@ -166,7 +166,7 @@
         setTimeout(function () {
             var $links = $('.pagination');
 
-            if ((offset + step) > end) {
+		if ((offset + step) >=  end) {
                 $links.find('.first').click();
             } else {
                 $links.find('.next').click();
